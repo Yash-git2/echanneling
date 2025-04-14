@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import AppointmentForm
 from .models import Appointment
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, 'home.html')
@@ -35,8 +36,9 @@ def dashboard(request):
 
 @login_required
 def cancel_appointment(request, appointment_id):
-    appointment = Appointment.objects.get(id=appointment_id, user=request.user)
-    appointment.delete()
-    return redirect('dashboard')
+    appointment = get_object_or_404(Appointment, id=appointment_id, user=request.user)
+    if request.method == 'POST':
+        appointment.delete()
+        return redirect('dashboard')
 
 # Create your views here.
