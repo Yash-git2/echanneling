@@ -33,4 +33,10 @@ def dashboard(request):
     appointments = Appointment.objects.filter(user=request.user)
     return render(request, 'core/dashboard.html', {'appointments': appointments})
 
+@login_required
+def cancel_appointment(request, appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id, user=request.user)
+    appointment.delete()
+    return redirect('dashboard')
+
 # Create your views here.
