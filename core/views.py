@@ -26,4 +26,11 @@ def book_appointment(request):
         form = AppointmentForm()
     return render(request, 'core/book_appointment.html', {'form': form})
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def dashboard(request):
+    appointments = Appointment.objects.filter(user=request.user)
+    return render(request, 'core/dashboard.html', {'appointments': appointments})
+
 # Create your views here.
