@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h2>My Appointments</h2>
-<ul>
-  {% for appointment in appointments %}
-    <li>{{ appointment.doctor.name }} - {{ appointment.date }} - {{ appointment.time_slot }}</li>
-  {% empty %}
-    <li>No appointments found.</li>
-  {% endfor %}
-</ul>
+  <h2>My Appointments</h2>
+  <ul>
+    {% for appointment in appointments %}
+      <li>
+        <strong>Doctor:</strong> {{ appointment.doctor.name }} <br>
+        <strong>Date:</strong> {{ appointment.date }} <br>
+        <strong>Time:</strong> {{ appointment.time_slot }} <br>
+        <form method="post" action="{% url 'cancel_appointment' appointment.id %}">
+          {% csrf_token %}
+          <button type="submit">Cancel</button>
+        </form>
+      </li>
+    {% empty %}
+      <li>No appointments found.</li>
+    {% endfor %}
+  </ul>
 {% endblock %}
