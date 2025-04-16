@@ -25,14 +25,13 @@ def book_appointment(request):
                 form.add_error(None, "This slot is already booked.")
     else:
         form = AppointmentForm()
-    return render(request, 'core/book_appointment.html', {'form': form})
+    return render(request, 'appointment_booking.html', {'form': form})
 
-from django.contrib.auth.decorators import login_required
 
 @login_required
 def dashboard(request):
     appointments = Appointment.objects.filter(user=request.user)
-    return render(request, 'core/dashboard.html', {'appointments': appointments})
+    return render(request, 'dashboard.html', {'appointments': appointments})
 
 @login_required
 def cancel_appointment(request, appointment_id):
@@ -40,5 +39,11 @@ def cancel_appointment(request, appointment_id):
     if request.method == 'POST':
         appointment.delete()
         return redirect('dashboard')
+
+from django.shortcuts import render
+
+def book_appointment_view(request):
+    # Any logic for booking an appointment here (if any)
+    return render(request, 'appointment_booking.html')  # Use the correct template name
 
 # Create your views here.
