@@ -27,11 +27,15 @@ def book_appointment(request):
         form = AppointmentForm()
     return render(request, 'appointment_booking.html', {'form': form})
 
-
-@login_required
+#@login_required
 def dashboard(request):
-    appointments = Appointment.objects.filter(user=request.user)
+    if request.user.is_authenticated:
+        appointments = Appointment.objects.filter(user=request.user)
+    else:
+        appointments = []  # or None or some default data
+    
     return render(request, 'dashboard.html', {'appointments': appointments})
+
 
 @login_required
 def cancel_appointment(request, appointment_id):
