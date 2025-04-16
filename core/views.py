@@ -21,6 +21,14 @@ def register(request):
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
 
+def appointment(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        date = request.POST.get('date')
+        time = request.POST.get('time')
+        messages.success(request, f"Appointment for {name} on {date} at {time} has been successfully booked!")
+    return render(request, 'appointment.html')
+
 @login_required
 def dashboard(request):
     return render(request, 'dashboard.html')
