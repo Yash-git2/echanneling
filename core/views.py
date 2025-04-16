@@ -18,7 +18,7 @@ def register(request):
             messages.success(request, 'Account created successfully!')
             return redirect('dashboard')  
     else:
-        form = UserRegisterForm()
+        form = RegisterForm()
     return render(request, 'register.html', {'form': form})
 
 @login_required
