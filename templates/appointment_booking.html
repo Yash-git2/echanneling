@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Book Appointment</title>
-    
 </head>
 <body>
     {% extends 'base.html' %}
@@ -11,6 +10,14 @@
     {% block content %}
         <h2>Book an Appointment</h2>
 
+        <!-- Display success or error messages -->
+        {% if messages %}
+            <div class="alert alert-info">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
 
         <form method="POST">
             {% csrf_token %}
@@ -37,6 +44,5 @@
         <br>
         <a href="{% url 'dashboard' %}">Go to Dashboard</a>
     {% endblock %}
-
 </body>
 </html>

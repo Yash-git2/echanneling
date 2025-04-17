@@ -22,6 +22,7 @@ def book_appointment(request):
             ).exists()
             if not exists:
                 appointment.save()
+                messages.success(request, "Appointment successfully booked!")
                 return redirect('dashboard')
             else:
                 form.add_error(None, "This slot is already booked.")
