@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>My Appointments</h2>
+  <ul class="list-group">
+    {% for appointment in appointments %}
+        <li class="list-group-item">
+            <strong>Doctor:</strong> {{ appointment.doctor.name }} <br>
+            <strong>Date:</strong> {{ appointment.date }} <br>
+            <strong>Time:</strong> {{ appointment.time_slot }} <br>
+            <form method="POST" action="{% url 'cancel_appointment' appointment.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+            </form>
+        </li>
+    {% empty %}
+        <li class="list-group-item">No appointments found.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
