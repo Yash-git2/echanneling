@@ -9,7 +9,7 @@ body{
   background-color: #f8f9fa;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   width: 100%; /* Make sure each box takes full available width */
   box-sizing: border-box; /* Prevents padding from affecting width */
   display: grid;
@@ -17,8 +17,14 @@ body{
   column-gap: 16px;
   row-gap: 40px;
 
-  }
+}
 
+.info-box {
+    border: 1px solid #838181; /* This will create a border around the div */
+    border-radius: 5px; /* Optional: to round the corners */
+    background-color: #fff;
+
+}
 
 .logo-medium {
   width: 100px;
