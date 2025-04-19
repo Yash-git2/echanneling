@@ -1,0 +1,73 @@
+/* Custom Styling */
+body{
+  margin: 0;
+  background-color: rgb(247, 247, 247);
+}
+
+/* Styling for individual information slides */
+.information-slide {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Make sure each box takes full available width */
+  box-sizing: border-box; /* Prevents padding from affecting width */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+  row-gap: 40px;
+
+  }
+
+
+.logo-medium {
+  width: 100px;
+  height: 60px;
+  object-fit: contain;
+}
+
+
+/* Footer Styling */
+.custom-footer {
+  background-color: #ada8a8;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  margin-top: 50px;
+  width: 100%;
+  position: relative; /* Ensures the footer stretches across the screen */
+  left: 0; /* Aligns it to the left edge of the screen */
+  right: 0; /* Aligns it to the right edge of the screen */
+}
+
+.custom-footer .contact-info {
+  margin-top: 20px;
+}
+
+.custom-footer h5 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.custom-footer p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.custom-footer hr {
+  margin: 20px auto;
+  border: 1px solid #444;
+  width: 80%;
+}
+
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+  .information-grid {
+    flex-direction: column; /* Stack the items vertically on smaller screens */
+  }
+
+  .col-md-6 {
+    flex: 0 0 100%; /* Ensure full width for columns on small screens */
+  }
+}
