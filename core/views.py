@@ -65,9 +65,6 @@ def view_appointments(request):
         messages.success(request, f"Appointment for {name} on {date} at {time} has been successfully booked!")
     return render(request, 'appointment.html')
 
-def book_appointment(request):
-    return render(request, 'appointment_booking.html')
-
 def emergency_numbers(request):
     return render(request, 'emergency_numbers.html')
 
