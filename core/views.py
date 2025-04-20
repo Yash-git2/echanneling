@@ -66,5 +66,10 @@ def appointment(request):
     return render(request, 'appointment.html')
 
 def book_appointment_view(request):
-    # Any logic for booking an appointment here (if any)
-    return render(request, 'appointment_booking.html')  # Use the correct template name
+    return render(request, 'appointment_booking.html')
+
+def emergency_numbers(request):
+    return render(request, 'emergency_numbers.html')
+
+def book_lab_test(request):
+    return render(request, 'book_lab_test.html')
