@@ -71,5 +71,6 @@ def book_appointment_view(request):
 def emergency_numbers(request):
     return render(request, 'emergency_numbers.html')
 
-def book_lab_test(request):
-    return render(request, 'book_lab_test.html')
+def lab_test(request):
+    return render(request, 'lab_test.html')
+
