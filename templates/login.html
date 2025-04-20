@@ -1,21 +1,108 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h2>Login</h2>
+    <h2>Login</h2>
 
-{% if form.errors %}
-  <p style="color: red;">Invalid username or password. Please try again.</p>
-{% endif %}
+    {% if form.errors %}
+        <p>Invalid username or password. Please try again.</p>
+    {% endif %}
 
-<form method="post">
-  {% csrf_token %}
-  <div>
-    {{ form.username.label_tag }}<br>
-    {{ form.username }}
-  </div>
-  <div>
-    {{ form.password.label_tag }}<br>
-    {{ form.password }}
-  </div>
-  <button type="submit">Login</button>
-</form>
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            {{ form.username.label_tag }}<br>
+            {{ form.username }}
+        </div>
+        <div>
+            {{ form.password.label_tag }}<br>
+            {{ form.password }}
+        </div>
+        <button type="submit">Login</button>
+    </form>
+
+    <style>
+        /* General styling for the body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main content area */
+        h2 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        /* Form container */
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form group styling */
+        div {
+            margin-bottom: 15px;
+        }
+
+        div label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        div input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        div input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Error message */
+        p {
+            color: red;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Button styling */
+        button {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #23272b;
+        }
+
+        /* Responsive design */
+        @media screen and (max-width: 768px) {
+            form {
+                width: 90%;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
 {% endblock %}
