@@ -8,7 +8,7 @@ from django.contrib import messages
 def home(request):
     return render(request, 'home.html')
 
-def book_appointment(request):
+def book_appointment_view(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
@@ -57,7 +57,7 @@ def register(request):
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
 
-def appointment(request):
+def view_appointments(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         date = request.POST.get('date')
@@ -65,12 +65,12 @@ def appointment(request):
         messages.success(request, f"Appointment for {name} on {date} at {time} has been successfully booked!")
     return render(request, 'appointment.html')
 
-def book_appointment_view(request):
+def book_appointment(request):
     return render(request, 'appointment_booking.html')
 
 def emergency_numbers(request):
     return render(request, 'emergency_numbers.html')
 
 def lab_test(request):
-    return render(request, 'lab_test.html')
+    return render(request, 'book_lab_test.html')
 

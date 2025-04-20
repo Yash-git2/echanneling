@@ -14,20 +14,19 @@
             <a class="navbar-brand" href="/">Echanneling</a>
             <div>
                 <a class="nav-link d-inline" href="/">Home | </a>
+
                 {% if user.is_authenticated %}
-                    <a class="nav-link d-inline" href="/dashboard/">Dashboard | </a>
                     <form method="post" action="{% url 'logout' %}" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-link nav-link d-inline p-0" style="color: #0d6efd; text-decoration: underline;">Logout |</button>
                     </form>
+                    <a class="nav-link d-inline" href="{% url 'book_appointment' %}">Book Appointment | </a>
+                    <a class="nav-link d-inline" href="{% url 'emergency_numbers' %}">Emergency Numbers</a>
                 {% else %}
                     <a class="nav-link d-inline" href="/login/">Login | </a>
                     <a class="nav-link d-inline" href="/register/">Register | </a>
+                    <a class="nav-link d-inline" href="{% url 'book_appointment' %}">Book Appointment</a>
                 {% endif %}
-                <a class="nav-link d-inline" href="{% url 'book_appointment' %}">Book Appointment</a>
-                <a class="nav-link d-inline" href="{% url 'lab_test' %}">Book a Lab Test</a>
-                <a class="nav-link d-inline" href="{% url 'emergency_numbers' %}">Emergency Numbers</a>
-                <a class="nav-link d-inline" href="{% url 'view_appointments' %}">View Appointments</a>
             </div>
         </div>
     </nav>
