@@ -8,6 +8,7 @@ from django.contrib import messages
 def home(request):
     return render(request, 'home.html')
 
+@login_required
 def book_appointment_view(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
@@ -68,6 +69,10 @@ def view_appointments(request):
 def emergency_numbers(request):
     return render(request, 'emergency_numbers.html')
 
+<<<<<<< HEAD
 def lab_test(request):
+=======
+def lab__test(request):
+>>>>>>> 597708b1842c0fceb1742b66d455f769612651f7
     return render(request, 'book_lab_test.html')
 
