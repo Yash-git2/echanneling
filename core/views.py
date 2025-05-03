@@ -69,6 +69,7 @@ def view_appointments(request):
 def emergency_numbers(request):
     return render(request, 'emergency_numbers.html')
 
+@login_required
 def lab__test(request):
     return render(request, 'book_lab_test.html')
 
