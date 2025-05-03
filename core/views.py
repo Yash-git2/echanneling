@@ -56,7 +56,23 @@ def cancel_appointment(request, appointment_id):
         messages.success(request, "Appointment cancelled successfully.")
         return redirect('dashboard')
 
+<<<<<<< HEAD
 def appointment(request):
+=======
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Account created successfully!')
+            return redirect('dashboard')  
+    else:
+        form = RegisterForm()
+    return render(request, 'register.html', {'form': form})
+
+def view_appointments(request):
+>>>>>>> user-login
     if request.method == 'POST':
         name = request.POST.get('name')
         date = request.POST.get('date')
@@ -64,6 +80,7 @@ def appointment(request):
         messages.success(request, f"Appointment for {name} on {date} at {time} has been successfully booked!")
     return render(request, 'appointment.html')
 
+<<<<<<< HEAD
 def book_appointment_view(request):
     # Any logic for booking an appointment here (if any)
     return render(request, 'appointment_booking.html')  # Use the correct template name
@@ -72,6 +89,13 @@ def emergency_numbers(request):
     return render(request, 'emergency_numbers.html')
 
 def lab_test(request):
+=======
+def emergency_numbers(request):
+    return render(request, 'emergency_numbers.html')
+
+@login_required
+def lab__test(request):
+>>>>>>> user-login
     return render(request, 'book_lab_test.html')
 
 def view_appointments(request):
