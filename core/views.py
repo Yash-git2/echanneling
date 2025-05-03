@@ -69,10 +69,6 @@ def view_appointments(request):
 def emergency_numbers(request):
     return render(request, 'emergency_numbers.html')
 
-<<<<<<< HEAD
-def lab_test(request):
-=======
 def lab__test(request):
->>>>>>> 597708b1842c0fceb1742b66d455f769612651f7
     return render(request, 'book_lab_test.html')
 
