@@ -34,6 +34,6 @@ class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = ['doctor', 'date', 'time_slot']
-         widgets = {
+        widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
         }
