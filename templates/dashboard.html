@@ -1,20 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>My Appointments</h2>
-  <ul class="list-group">
-    {% for appointment in appointments %}
-        <li class="list-group-item">
-            <strong>Doctor:</strong> {{ appointment.doctor.name }} <br>
-            <strong>Date:</strong> {{ appointment.date }} <br>
-            <strong>Time:</strong> {{ appointment.time_slot }} <br>
-            <form method="POST" action="{% url 'cancel_appointment' appointment.id %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
-            </form>
-        </li>
-    {% empty %}
-        <li class="list-group-item">No appointments found.</li>
-    {% endfor %}
-  </ul>
+<h2>My Appointments</h2>
+
+<!-- Check if there are appointments -->
+{% if appointments %}
+    <ul class="list-group">
+        {% for appointment in appointments %}
+            <li class="list-group-item">
+                <strong>Doctor:</strong> {{ appointment.doctor.name }} <br>
+                <strong>Date:</strong> {{ appointment.date }} <br>
+                <strong>Time:</strong> {{ appointment.time_slot }} <br>
+
+                <!-- Status Indicator -->
+                {% if appointment.status == 'upcoming' %}
+                    <span class="badge bg-success">Upcoming</span>
+                {% elif appointment.status == 'completed' %}
+                    <span class="badge bg-primary">Completed</span>
+                {% elif appointment.status == 'canceled' %}
+                    <span class="badge bg-danger">Canceled</span>
+                {% endif %}
+
+                <div class="mt-2">
+                    {% if appointment.status == 'upcoming' %}
+                        <form method="POST" action="{% url 'cancel_appointment' appointment.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                        </form>
+                        <a href="{% url 'reschedule_appointment' appointment.id %}" class="btn btn-warning btn-sm ml-2">Reschedule</a>
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No appointments found.</p>
+{% endif %}
+
+<!-- Optional Pagination -->
+<div class="pagination mt-4">
+  {% for page_num in page_range %}
+    <a href="?page={{ page_num }}" class="btn btn-light">{{ page_num }}</a>
+  {% endfor %}
+</div>
+
 {% endblock %}

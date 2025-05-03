@@ -1,169 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Book Appointment</title>
+{% extends 'base.html' %}
 
-    <style>
-        /* General styling for the body */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
+{% block content %}
+<h2>Book an Appointment</h2>
 
-        /* Main content area */
-        h2 {
-            text-align: center;
-            margin-top: 50px;
-            font-size: 28px;
-            color: #333;
-        }
+<form method="POST" class="appointment-form">
+  {% csrf_token %}
+  {{ form.as_p }}
 
-        /* Form container */
-        form {
-            max-width: 500px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+  {% if form.errors %}
+    <ul class="error-list">
+      {% for field in form %}
+        {% for error in field.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  {% endif %}
 
-        /* Form group styling */
-        .form-group {
-            margin-bottom: 15px;
-        }
+  <button type="submit" class="btn btn-dark">Book Appointment</button>
+</form>
 
-        .form-group label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
+<div class="back-link">
+  <a href="{% url 'dashboard' %}">Go to Dashboard</a>
+</div>
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
+{% endblock %}
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: #007bff;
-            outline: none;
-        }
+{% block extra_styles %}
+<style>
+  /* Basic styling */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    padding: 20px;
+  }
 
-        /* Error messages */
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #2c3e50;
+  }
 
-        /* Success/Error messages container */
-        .alert-info {
-            background-color: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
+  /* Form container */
+  .appointment-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+  }
 
-        .alert-info p {
-            margin: 0;
-        }
+  .appointment-form p {
+    margin: 15px 0;
+  }
 
-        /* Button styling */
-        button.btn-dark {
-            background-color: #343a40;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        }
+  /* Input fields */
+  .appointment-form input, 
+  .appointment-form select, 
+  .appointment-form button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
 
-        button.btn-dark:hover {
-            background-color: #23272b;
-        }
+  /* Submit button */
+  .btn-submit {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
 
-        /* Link to the Dashboard */
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            font-size: 16px;
-            color: #007bff;
-            text-decoration: none;
-        }
+  .btn-submit:hover {
+    background-color: #2980b9;
+  }
 
-        a:hover {
-            text-decoration: underline;
-        }
+  /* Error messages */
+  .error-list {
+    color: red;
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+  }
 
-        /* Responsive design */
-        @media screen and (max-width: 768px) {
-            form {
-                width: 90%;
-            }
+  /* Back link */
+  .back-link {
+    text-align: center;
+    margin-top: 20px;
+  }
 
-            button.btn-dark {
-                width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-    {% extends 'base.html' %}
+  .back-link a {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 16px;
+  }
 
-    {% block content %}
-        <h2>Book an Appointment</h2>
+  .back-link a:hover {
+    text-decoration: underline;
+  }
 
-        <!-- Display success or error messages -->
-        {% if messages %}
-            <div class="alert alert-info">
-                {% for message in messages %}
-                    <p>{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        <form method="POST">
-            {% csrf_token %}
-            
-            {% if form.errors %}
-                <div class="alert alert-danger">
-                    <strong>There were errors with your form submission:</strong>
-                    <ul>
-                        {% for field in form %}
-                            {% for error in field.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-
-            <div class="form-group">
-                {{ form.as_p }}
-            </div>
-
-            <button type="submit" class="btn btn-dark">Book</button>
-        </form>
-        <br>
-        <a href="{% url 'dashboard' %}">Go to Dashboard</a>
-    {% endblock %}
-</body>
-</html>
+</style>
+{% endblock %}

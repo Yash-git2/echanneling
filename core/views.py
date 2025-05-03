@@ -56,18 +56,6 @@ def cancel_appointment(request, appointment_id):
         messages.success(request, "Appointment cancelled successfully.")
         return redirect('dashboard')
 
-def register(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, 'Account created successfully!')
-            return redirect('dashboard')  
-    else:
-        form = RegisterForm()
-    return render(request, 'register.html', {'form': form})
-
 def appointment(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -88,6 +76,3 @@ def lab_test(request):
 
 def view_appointments(request):
     return render(request, 'view_appointments.html')
-
-
-
