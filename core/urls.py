@@ -9,8 +9,9 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('appointment/', views.appointment, name='appointment'),
-    path('book/', views.book_appointment_view, name='book_appointment'),
+    path('book/', views.book_appointment_view, name='book_appointment'),  
     path('cancel/<int:appointment_id>/', views.cancel_appointment, name='cancel_appointment'),
     path('emergency-numbers/', views.emergency_numbers, name='emergency_numbers'),
-    path('lab__test/', views.lab__test, name='lab__test'),
+    path('appointments/', views.view_appointments, name='view_appointments'),
+    path('lab-test/', views.lab_test, name='book_lab_test'),  
 ]

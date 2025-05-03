@@ -8,6 +8,19 @@ from django.contrib import messages
 def home(request):
     return render(request, 'home.html')
 
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Account created successfully!')
+            return redirect('dashboard')
+    else:
+        form = RegisterForm()
+    return render(request, 'register.html', {'form': form})
+
+@login_required
 def book_appointment(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
@@ -32,10 +45,7 @@ def book_appointment(request):
 
 @login_required
 def dashboard(request):
-    if request.user.is_authenticated:
-        appointments = Appointment.objects.filter(user=request.user)
-    else:
-        appointments = []  # or None or some default data
+    appointments = Appointment.objects.filter(user=request.user)
     return render(request, 'dashboard.html', {'appointments': appointments})
 
 @login_required
@@ -43,19 +53,8 @@ def cancel_appointment(request, appointment_id):
     appointment = get_object_or_404(Appointment, id=appointment_id, user=request.user)
     if request.method == 'POST':
         appointment.delete()
+        messages.success(request, "Appointment cancelled successfully.")
         return redirect('dashboard')
-
-def register(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, 'Account created successfully!')
-            return redirect('dashboard')  
-    else:
-        form = RegisterForm()
-    return render(request, 'register.html', {'form': form})
 
 def appointment(request):
     if request.method == 'POST':
@@ -66,11 +65,14 @@ def appointment(request):
     return render(request, 'appointment.html')
 
 def book_appointment_view(request):
-    return render(request, 'appointment_booking.html')
+    # Any logic for booking an appointment here (if any)
+    return render(request, 'appointment_booking.html')  # Use the correct template name
 
 def emergency_numbers(request):
     return render(request, 'emergency_numbers.html')
 
-def lab__test(request):
+def lab_test(request):
     return render(request, 'book_lab_test.html')
 
+def view_appointments(request):
+    return render(request, 'view_appointments.html')
