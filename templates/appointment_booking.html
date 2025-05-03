@@ -41,6 +41,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if user.is_authenticated %}
 <h2>Book an Appointment</h2>
 
 <form method="POST" class="appointment-form">
@@ -63,7 +64,9 @@
 <div class="back-link">
   <a href="{% url 'dashboard' %}">Go to Dashboard</a>
 </div>
-
+{% else %}
+  <p style="text-align:center;">You must be <a href="{% url 'login' %}">logged in</a> to book an appointment.</p>
+{% endif %}
 {% endblock %}
 
 {% block extra_styles %}
@@ -148,4 +151,5 @@
 
 </style>
 {% endblock %}
+
 >>>>>>> 597708b1842c0fceb1742b66d455f769612651f7
