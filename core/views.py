@@ -9,7 +9,7 @@ def home(request):
     return render(request, 'home.html')
 
 @login_required
-def book_appointment_view(request):
+def book_appointment(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
