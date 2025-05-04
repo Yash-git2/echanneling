@@ -12,6 +12,24 @@
         button { margin-top: 20px; background: #27ae60; color: white; padding: 10px; border: none; border-radius: 5px; width: 100%; font-size: 16px; }
         button:hover { background: #219150; cursor: pointer; }
         .errorlist { color: red; list-style: none; padding: 0; margin-top: 5px; }
+    
+        /* Styles for the home button */
+        .home-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .home-button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
@@ -48,6 +66,7 @@
 
         <button type="submit">Submit</button>
     </form>
+    <a href="/" class="home-button">Back to Home</a>
 </body>
 </html>
 

@@ -3,6 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, AppointmentForm
 from .models import Appointment
+from .models import LabTestBooking
 from django.contrib import messages
 
 def home(request):
@@ -46,7 +47,11 @@ def book_appointment(request):
 @login_required
 def dashboard(request):
     appointments = Appointment.objects.filter(user=request.user)
-    return render(request, 'dashboard.html', {'appointments': appointments})
+    lab_tests = LabTestBooking.objects.filter(user=request.user)
+    return render(request, 'dashboard.html', {
+        'appointments': appointments,
+        'lab_tests': lab_tests,
+    })
 
 @login_required
 def cancel_appointment(request, appointment_id):
@@ -57,13 +62,22 @@ def cancel_appointment(request, appointment_id):
         return redirect('dashboard')
 
 
+# Doctor appointments view
 def view_appointments(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         date = request.POST.get('date')
         time = request.POST.get('time')
+        appointment = Appointment.objects.create(
+            user=request.user,  
+            name=name,
+            date=date,
+            time=time
+        )
         messages.success(request, f"Appointment for {name} on {date} at {time} has been successfully booked!")
-    return render(request, 'appointment.html')
+    appointments = Appointment.objects.filter(user=request.user).order_by('-date')
+
+    return render(request, 'dashboard.html', {'appointments': appointments})
 
 def book_appointment_view(request):
     # Any logic for booking an appointment here (if any)
@@ -74,5 +88,34 @@ def emergency_numbers(request):
 
 @login_required
 def lab__test(request):
-    return render(request, 'book_lab_test.html')
+    if request.method == 'POST':
+        full_name = request.POST.get('name')
+        email = request.POST.get('email')
+        test = request.POST.get('test')
+        preferred_date = request.POST.get('date') or None
+        preferred_time = request.POST.get('time')
+        prescription = request.FILES.get('prescription')
+        notes = request.POST.get('notes')
+
+        LabTestBooking.objects.create(
+            user=request.user,
+            full_name=full_name,
+            email=email,
+            test=test,
+            preferred_date=preferred_date,
+            preferred_time=preferred_time,
+            prescription=prescription,
+            notes=notes
+        )
+        messages.success(request, "Lab test booked successfully.")
+        return redirect('dashboard')  # Assuming this exists in your urls.py
+
+    return render(request, 'book_lab_test.html')  # Use a dedicated template for lab test booking
+        
+
+# Lab test appointments view
+def view_lab_tests(request):
+    lab_tests = LabTestBooking.objects.filter(user=request.user).order_by('-preferred_date')
+    return render(request, 'dashboard.html', {'lab_tests': lab_tests})
+
 
