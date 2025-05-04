@@ -29,6 +29,7 @@
         {% for appointment in appointments %}
             <li class="list-group-item">
                 <strong>Doctor:</strong> {{ appointment.doctor.name }} <br>
+                <strong>Hospital:</strong> {{ appointment.doctor.hospital }}<br>
                 <strong>Date:</strong> {{ appointment.date }} <br>
                 <strong>Time:</strong> {{ appointment.time_slot }} <br>
 
@@ -46,7 +47,7 @@
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
                         </form>
-                        <a href="{% url 'reschedule_appointment' appointment.id %}" class="btn btn-warning btn-sm ml-2">Reschedule</a>
+                        <a href="{% url 'book_appointment' %}" class="btn btn-warning btn-sm ml-2">Reschedule</a>
                     {% endif %}
                 </div>
             </li>

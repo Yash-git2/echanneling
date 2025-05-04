@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, AppointmentForm
 from .models import Appointment
 from .models import LabTestBooking
+from .models import Doctor
 from django.contrib import messages
 
 def home(request):
@@ -23,6 +24,7 @@ def register(request):
 
 @login_required
 def book_appointment(request):
+    
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
@@ -118,4 +120,7 @@ def view_lab_tests(request):
     lab_tests = LabTestBooking.objects.filter(user=request.user).order_by('-preferred_date')
     return render(request, 'dashboard.html', {'lab_tests': lab_tests})
 
+@login_required
+def reschedule_appointment(request, appointment_id):
+    return redirect('book_appointment')
 

@@ -46,8 +46,16 @@
         {% endif %}
 
         <label for="id_doctor">Select Doctor</label>
-        {{ form.doctor }}
+        <select name="doctor" id="id_doctor">
+            {% for doctor in form.fields.doctor.queryset %}
+                <option value="{{ doctor.id }}">
+                    {{ doctor.name }} ({{ doctor.specialty }}) - {{ doctor.hospital }}
+                </option>
+            {% endfor %}
+        </select>
 
+
+        
         <label for="id_date">Appointment Date</label>
         {{ form.date }}
 
