@@ -22,3 +22,16 @@ class Appointment(models.Model):
         return f"{self.user.username} - {self.doctor.name} - {self.date} {self.time_slot}"
 
 
+class LabTestBooking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    test = models.CharField(max_length=50)
+    preferred_date = models.DateField(null=True, blank=True)
+    preferred_time = models.TimeField()
+    prescription = models.FileField(upload_to='prescriptions/', null=True, blank=True)
+    notes = models.TextField(blank=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.full_name} - {self.test} on {self.preferred_date}"

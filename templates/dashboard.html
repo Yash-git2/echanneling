@@ -3,7 +3,27 @@
 {% block content %}
 <h2>My Appointments</h2>
 
-<!-- Check if there are appointments -->
+<style>
+
+    /* Styles for the home button */
+    .home-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #3498db;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .home-button:hover {
+        background-color: #2980b9;
+    }
+</style>
+<!-- Existing Doctor Appointments Section -->
 {% if appointments %}
     <ul class="list-group">
         {% for appointment in appointments %}
@@ -12,7 +32,6 @@
                 <strong>Date:</strong> {{ appointment.date }} <br>
                 <strong>Time:</strong> {{ appointment.time_slot }} <br>
 
-                <!-- Status Indicator -->
                 {% if appointment.status == 'upcoming' %}
                     <span class="badge bg-success">Upcoming</span>
                 {% elif appointment.status == 'completed' %}
@@ -34,14 +53,44 @@
         {% endfor %}
     </ul>
 {% else %}
-    <p>No appointments found.</p>
+    <p>No doctor appointments found.</p>
 {% endif %}
 
-<!-- Optional Pagination -->
+<!-- LAB TEST APPOINTMENTS SECTION -->
+<hr class="my-4">
+<h2>My Lab Test Bookings</h2>
+
+{% if lab_tests %}
+    <ul class="list-group">
+        {% for test in lab_tests %}
+            <li class="list-group-item">
+                <strong>Full Name:</strong> {{ test.full_name }} <br>
+                <strong>Test:</strong> {{ test.test|title }} <br>
+                <strong>Date:</strong> {{ test.preferred_date }} <br>
+                <strong>Time:</strong> {{ test.preferred_time }} <br>
+
+                <div class="mt-2">
+                    {% if test.prescription %}
+                        <a href="{{ test.prescription.url }}" target="_blank" class="btn btn-primary btn-sm">View Prescription</a>
+                    {% else %}
+                        <span class="badge bg-secondary">No Prescription</span>
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No lab test appointments found.</p>
+{% endif %}
+
+
+<!-- Pagination (Optional) -->
 <div class="pagination mt-4">
   {% for page_num in page_range %}
     <a href="?page={{ page_num }}" class="btn btn-light">{{ page_num }}</a>
   {% endfor %}
 </div>
+
+<a href="/" class="home-button">Back to Home</a>
 
 {% endblock %}
