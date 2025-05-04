@@ -31,6 +31,12 @@ class AppointmentForm(forms.ModelForm):
     # ✅ Doctor dropdown from model
     doctor = forms.ModelChoiceField(queryset=Doctor.objects.all())
 
+    # ✅ Date 
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
     class Meta:
         model = Appointment
         fields = ['doctor', 'date', 'time_slot']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+        }
