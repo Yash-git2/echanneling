@@ -1,14 +1,9 @@
-<!-- Add dashboard.html template for user dashboard view -->
-
-
 {% extends 'base.html' %}
 
 {% block content %}
 <h2>My Appointments</h2>
 
 <style>
-
-    /* Styles for the home button */
     .home-button {
         position: fixed;
         bottom: 20px;
@@ -26,8 +21,9 @@
         background-color: #2980b9;
     }
 </style>
-<!-- Existing Doctor Appointments Section -->
-{% if appointment %}
+
+<!-- DOCTOR APPOINTMENTS -->
+{% if appointments %}
     <ul class="list-group">
         {% for appointment in appointments %}
             <li class="list-group-item">
@@ -60,11 +56,11 @@
     <p>No doctor appointments found.</p>
 {% endif %}
 
-<!-- LAB TEST APPOINTMENTS SECTION -->
+<!-- LAB TEST APPOINTMENTS -->
 <hr class="my-4">
 <h2>My Lab Test Bookings</h2>
 
-{% if lab__test %}
+{% if lab_tests %}
     <ul class="list-group">
         {% for test in lab_tests %}
             <li class="list-group-item">
@@ -87,8 +83,7 @@
     <p>No lab test appointments found.</p>
 {% endif %}
 
-
-<!-- Pagination (Optional) -->
+<!-- Pagination Controls -->
 <div class="pagination mt-4">
   {% for page_num in page_range %}
     <a href="?page={{ page_num }}" class="btn btn-light">{{ page_num }}</a>
@@ -96,5 +91,4 @@
 </div>
 
 <a href="/" class="home-button">Back to Home</a>
-
 {% endblock %}

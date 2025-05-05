@@ -71,22 +71,6 @@ def cancel_appointment(request, appointment_id):
         return redirect('dashboard')
 
 
-# Doctor appointments view
-def view_appointments(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        date = request.POST.get('date')
-        time = request.POST.get('time')
-        appointment = Appointment.objects.create(
-            user=request.user,  
-            name=name,
-            date=date,
-            time=time
-        )
-        messages.success(request, f"Appointment for {name} on {date} at {time} has been successfully booked!")
-    appointments = Appointment.objects.filter(user=request.user).order_by('-date')
-
-    return render(request, 'dashboard.html', {'appointments': appointments})
 
 def book_appointment_view(request):
     # Any logic for booking an appointment here (if any)
