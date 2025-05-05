@@ -9,6 +9,7 @@ class Doctor(models.Model):
     availability = models.BooleanField(default=True)
     image = models.ImageField(upload_to='doctor_images/', null=True, blank=True)
     rating = models.FloatField(default=0.0)
+    consultation_fee = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def __str__(self):
         return f"{self.name} - {self.specialty}"
