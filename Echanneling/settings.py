@@ -1,3 +1,5 @@
+#Add project settings configuration file
+
 """
 Django settings for Echanneling project.
 
