@@ -124,3 +124,21 @@ def view_lab_tests(request):
 def reschedule_appointment(request, appointment_id):
     return redirect('book_appointment')
 
+
+
+def doctor_list(request):
+    specialty = request.GET.get('specialty')
+    sort_by = request.GET.get('sort')
+
+    doctors = Doctor.objects.all()
+
+    if specialty:
+        doctors = doctors.filter(specialty__icontains=specialty)
+    if sort_by == 'available':
+        doctors = doctors.order_by('-availability')
+
+    return render(request, 'doctor_list.html', {'doctors': doctors})
+
+def doctor_profile(request, doctor_id):
+    doctor = get_object_or_404(Doctor, pk=doctor_id)
+    return render(request, 'doctor_profile.html', {'doctor': doctor})
