@@ -14,8 +14,6 @@ class RegisterForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 
-
-
 class AppointmentForm(forms.ModelForm):
      # ✅ Dummy time slots for now
     TIME_CHOICES = [
@@ -58,3 +56,42 @@ class AppointmentForm(forms.ModelForm):
         self.fields['time_slot'].widget.attrs.update({'placeholder': 'e.g. 10:00 AM'})
         self.fields['payment_method'].widget.attrs.update({'class': 'form-control'})
 
+class RescheduleAppointmentForm(forms.ModelForm):
+    # Dummy time slots (similar to AppointmentForm)
+    TIME_CHOICES = [
+        ("09:00 AM", "09:00 AM"),
+        ("10:00 AM", "10:00 AM"),
+        ("11:00 AM", "11:00 AM"),
+        ("12:00 PM", "12:00 PM"),
+        ("01:00 PM", "01:00 PM"),
+        ("02:00 PM", "02:00 PM"),
+        ("03:00 PM", "03:00 PM"),
+        ("04:00 PM", "04:00 PM"),
+    ]
+
+    # Override time_slot field from model
+    time_slot = forms.ChoiceField(choices=TIME_CHOICES)
+
+    # Doctor dropdown from model (same as AppointmentForm)
+    doctor = forms.ModelChoiceField(queryset=Doctor.objects.all())
+
+    # Payment method remains as in AppointmentForm (optional for rescheduling)
+    payment_method = forms.ChoiceField(
+        choices=Appointment.PAYMENT_METHOD_CHOICES,
+        widget=forms.RadioSelect
+    )
+
+    # Date picker for rescheduling
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = Appointment
+        fields = ['doctor', 'date', 'time_slot', 'payment_method']
+
+    def __init__(self, *args, **kwargs):
+        super(RescheduleAppointmentForm, self).__init__(*args, **kwargs)
+
+        # Optional: Add placeholders and form styling (same as AppointmentForm)
+        self.fields['date'].widget.attrs.update({'placeholder': 'YYYY-MM-DD'})
+        self.fields['time_slot'].widget.attrs.update({'placeholder': 'e.g. 10:00 AM'})
+        self.fields['payment_method'].widget.attrs.update({'class': 'form-control'})

@@ -46,7 +46,7 @@
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
                         </form>
-                        <a href="{% url 'book_appointment' %}" class="btn btn-warning btn-sm ml-2">Reschedule</a>
+                        <a href="{% url 'reschedule_appointment' appointment.id %}" class="btn btn-warning btn-sm ml-2">Reschedule</a>
                     {% endif %}
                 </div>
             </li>

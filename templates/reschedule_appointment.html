@@ -1,0 +1,15 @@
+<h2>Reschedule Appointment</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- This renders the form fields -->
+    <button type="submit">Reschedule Appointment</button>
+</form>
+
+<p>Current Appointment Details:</p>
+<ul>
+    <li>Doctor: {{ appointment.doctor.name }}</li>
+    <li>Date: {{ appointment.date }}</li>
+    <li>Time Slot: {{ appointment.time_slot }}</li>
+    <li>Payment Method: {{ appointment.payment_method }}</li>
+</ul>
