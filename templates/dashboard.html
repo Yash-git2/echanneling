@@ -24,7 +24,7 @@
     }
 </style>
 <!-- Existing Doctor Appointments Section -->
-{% if appointments %}
+{% if appointment %}
     <ul class="list-group">
         {% for appointment in appointments %}
             <li class="list-group-item">
@@ -61,7 +61,7 @@
 <hr class="my-4">
 <h2>My Lab Test Bookings</h2>
 
-{% if lab_tests %}
+{% if lab__test %}
     <ul class="list-group">
         {% for test in lab_tests %}
             <li class="list-group-item">

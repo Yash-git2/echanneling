@@ -117,7 +117,7 @@ def lab__test(request):
             notes=notes
         )
         messages.success(request, "Lab test booked successfully.")
-        return redirect('dashboard')  # Assuming this exists in your urls.py
+        return redirect('dashboard')  
 
     return render(request, 'book_lab_test.html')  # Use a dedicated template for lab test booking
         
