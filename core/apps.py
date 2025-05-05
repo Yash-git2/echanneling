@@ -1,3 +1,5 @@
+#Add apps.py for app configuration
+
 from django.apps import AppConfig
 
 
