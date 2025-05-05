@@ -17,26 +17,32 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Account created successfully!')
-            return redirect('dashboard')
+            return redirect('home')
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
 
 @login_required
 def book_appointment(request):
-    
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
             appointment = form.save(commit=False)
             appointment.user = request.user
-            # Check if slot is available
+
+            # Check if slot is already booked
             exists = Appointment.objects.filter(
                 doctor=appointment.doctor,
                 date=appointment.date,
                 time_slot=appointment.time_slot
             ).exists()
             if not exists:
+                # Handle payment method
+                if appointment.payment_method == 'cash':
+                    appointment.is_paid = False
+                else:
+                    appointment.is_paid = True  # Update after real payment gateway integration
+
                 appointment.save()
                 messages.success(request, "Appointment successfully booked!")
                 return redirect('dashboard')
@@ -45,6 +51,7 @@ def book_appointment(request):
     else:
         form = AppointmentForm()
     return render(request, 'appointment_booking.html', {'form': form})
+
 
 @login_required
 def dashboard(request):
@@ -142,8 +149,6 @@ def doctor_list(request):
 def doctor_profile(request, doctor_id):
     doctor = get_object_or_404(Doctor, pk=doctor_id)
     return render(request, 'doctor_profile.html', {'doctor': doctor})
-
-
 def create_appointment(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
@@ -159,3 +164,4 @@ def create_appointment(request):
     else:
         form = AppointmentForm()
     return render(request, 'appointment_form.html', {'form': form})
+
