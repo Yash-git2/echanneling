@@ -1,45 +1,36 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Doctor(models.Model):  
+class Doctor(models.Model):
     name = models.CharField(max_length=100)
     specialty = models.CharField(max_length=100)
-    hospital = models.CharField(max_length=100)
+    qualification = models.TextField(blank=True, null=True)
+    availability = models.BooleanField(default=True)
+    image = models.ImageField(upload_to='doctor_images/', null=True, blank=True)
+    rating = models.FloatField(default=0.0)
 
     def __str__(self):
         return f"{self.name} - {self.specialty}"
 
 class Appointment(models.Model):
-    STATUS_CHOICES = [
-        ('upcoming', 'Upcoming'),
-        ('completed', 'Completed'),
-        ('canceled', 'Canceled'),
-    ]
-
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     date = models.DateField()
     time_slot = models.CharField(max_length=50)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='upcoming')  # Add this line
 
     class Meta:
-        unique_together = ('doctor', 'date', 'time_slot')
-  # Prevent double bookings
+        unique_together = ('doctor', 'date', 'time_slot')  # Prevent double bookings
 
     def __str__(self):
         return f"{self.user.username} - {self.doctor.name} - {self.date} {self.time_slot}"
 
 
-class LabTestBooking(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=100)
-    email = models.EmailField()
-    test = models.CharField(max_length=50)
-    preferred_date = models.DateField(null=True, blank=True)
-    preferred_time = models.TimeField()
-    prescription = models.FileField(upload_to='prescriptions/', null=True, blank=True)
-    notes = models.TextField(blank=True)
-    submitted_at = models.DateTimeField(auto_now_add=True)
+
+class DoctorAvailability(models.Model):
+    doctor = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
 
     def __str__(self):
-        return f"{self.full_name} - {self.test} on {self.preferred_date}"
+        return f"{self.doctor.username} - {self.date} ({self.start_time} to {self.end_time})"
