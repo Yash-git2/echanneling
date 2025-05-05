@@ -1,0 +1,8 @@
+<h2>{{ doctor.name }}</h2>
+<img src="{{ doctor.image.url }}" width="200" />
+<p><strong>Specialty:</strong> {{ doctor.specialty }}</p>
+<p><strong>Qualification:</strong> {{ doctor.qualification }}</p>
+<p><strong>Rating:</strong> ⭐ {{ doctor.rating }}</p>
+<p><strong>Available:</strong> {% if doctor.availability %}Yes{% else %}No{% endif %}</p>
+
+<a href="{% url 'doctor_list' %}">Back to list</a>
