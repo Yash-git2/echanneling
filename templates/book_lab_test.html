@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book a Lab Test</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f8; padding: 40px; }
+        h1 { color: #2c3e50; text-align: center; }
+        form { background: white; max-width: 500px; margin: auto; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        label { display: block; margin-top: 15px; color: #34495e; }
+        input, select, textarea { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+        button { margin-top: 20px; background: #27ae60; color: white; padding: 10px; border: none; border-radius: 5px; width: 100%; font-size: 16px; }
+        button:hover { background: #219150; cursor: pointer; }
+
+        /* Styles for the home button */
+        .home-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .home-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Book a Lab Test</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="test">Select Lab Test</label>
+        <select id="test" name="test">
+            <option value="blood">Blood Test</option>
+            <option value="urine">Urine Test</option>
+            <option value="xray">X-Ray</option>
+            <option value="mri">MRI</option>
+        </select>
+
+        <label for="date">Preferred Date</label>
+        <input type="date" id="date" name="date">
+
+        <label for="time">Preferred Time</label>
+        <input type="time" id="time" name="time" required>
+
+        <label for="prescription">Upload Prescription (Optional)</label>
+        <input type="file" id="prescription" name="prescription" accept=".pdf,.jpg,.jpeg,.png">
+
+        <label for="notes">Additional Notes</label>
+        <textarea id="notes" name="notes" rows="4"></textarea>
+
+        <button type="submit">Submit Booking</button>
+    </form>
+
+    <a href="/" class="home-button">Back to Home</a>
+</body>
+</html>

@@ -117,9 +117,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "static/"
+# settings.py
+
+STATIC_URL = '/static/'
+
+# If you're developing locally and want to serve static files directly
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # only if you store global static files
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Authentication Redirects
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_REDIRECT_URL = 'login'
+LOGIN_URL = '/login/'

@@ -1,9 +1,95 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Welcome to Echanneling</h1>
-    <p>This is the home page.</p>
+<div class="text-center mt-5">
+    <h1>Welcome to CareConnect</h1>
+    <p class="lead mt-3">
+        CareConnect is a user-friendly platform that allows patients to easily book, manage, and cancel doctor appointments online.
+        With a simple and secure interface, users can access healthcare services from the comfort of their home — no more waiting in queues!
+        Stay organized, stay healthy.
+    </p>
+
+    <!-- Main Section -->
+    <main>
+        <div class="container py-5">
+            <div class="row">
+                <!-- Doctor Image -->
+                <div class="col-md-6 d-flex justify-content-center align-items-center mb-4 mb-md-0">
+                    <img class="img-fluid" src="{% static 'doctor.jpg' %}" alt="Doctor">
+                </div>
+
+                <!-- Information Boxes -->
+                <div class="col-md-6">
+                    <!-- Info Box 1 -->
+                    <div class="information-slide">
+                     <div class="info-box">
+                        <div class="d-flex justify-content-center mt-3">
+                            <img class="logo-medium" src="{% static 'seth.webp' %}" alt="seth logo">
+                        </div>
+                        <div class="d-flex justify-content-center my-3">
+                            <button class="btn btn-primary reserve-button" onclick="window.location.href='/book/'">
+                                Book Appointments
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Info Box 2 -->
+                    <div class="info-box">
+                        <div class="d-flex justify-content-center mt-3">
+                            <img class="logo-medium" src="{% static 'view.jpg' %}" alt="view logo">
+                        </div>
+                        <div class="d-flex justify-content-center my-3">
+                            <button class="btn btn-primary reserve-button" onclick="window.location.href='/dashboard/'">
+                                View Appointments
+                            </button>
+                            </div>
+                    </div>
+
+                    <!-- Info Box 3 -->
+                    <div class="info-box">
+                        <div class="d-flex justify-content-center mt-3">
+                            <img class="logo-medium" src="{% static 'test.png' %}" alt="test logo">
+                        </div>
+                        <div class="d-flex justify-content-center my-3">
+                            <!-- Link to book_lab_test.html -->
+                            <button class="btn btn-primary reserve-button" onclick="window.location.href='/lab__test/'">
+                                Book Lab Test
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Info Box 4 -->
+                    <div class="info-box">
+                        <div class="d-flex justify-content-center mt-3">
+                            <img class="logo-medium" src="{% static 'call.png' %}" alt="call logo">
+                        </div>
+                        <div class="d-flex justify-content-center my-3">
+                            <!-- Link to emergency_numbers.html -->
+                            <button class="btn btn-primary reserve-button" onclick="window.location.href='/emergency-numbers/'">
+                                Emergency Numbers
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="custom-footer mt-5">
+        <div class="contact-info text-center">
+            <h5>Contact Us</h5>
+            <p>
+                <strong>Telephone:</strong> +94 11 235 4978<br>
+                <strong>Email:</strong> support@careconnect.lk<br>
+                <strong>Address:</strong> No. 12/3, Ward Place, Colombo 07, Sri Lanka
+            </p>
+        </div>
+        <hr>
+        <p class="text-center mb-0">&copy; 2025 CareConnect</p>
+    </footer>
 
 {% endblock %}
