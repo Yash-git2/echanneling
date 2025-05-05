@@ -17,26 +17,32 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Account created successfully!')
-            return redirect('dashboard')
+            return redirect('home')
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
 
 @login_required
 def book_appointment(request):
-    
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
             appointment = form.save(commit=False)
             appointment.user = request.user
-            # Check if slot is available
+
+            # Check if slot is already booked
             exists = Appointment.objects.filter(
                 doctor=appointment.doctor,
                 date=appointment.date,
                 time_slot=appointment.time_slot
             ).exists()
             if not exists:
+                # Handle payment method
+                if appointment.payment_method == 'cash':
+                    appointment.is_paid = False
+                else:
+                    appointment.is_paid = True  # Update after real payment gateway integration
+
                 appointment.save()
                 messages.success(request, "Appointment successfully booked!")
                 return redirect('dashboard')
@@ -45,6 +51,7 @@ def book_appointment(request):
     else:
         form = AppointmentForm()
     return render(request, 'appointment_booking.html', {'form': form})
+
 
 @login_required
 def dashboard(request):
@@ -123,4 +130,38 @@ def view_lab_tests(request):
 @login_required
 def reschedule_appointment(request, appointment_id):
     return redirect('book_appointment')
+
+
+
+def doctor_list(request):
+    specialty = request.GET.get('specialty')
+    sort_by = request.GET.get('sort')
+
+    doctors = Doctor.objects.all()
+
+    if specialty:
+        doctors = doctors.filter(specialty__icontains=specialty)
+    if sort_by == 'available':
+        doctors = doctors.order_by('-availability')
+
+    return render(request, 'doctor_list.html', {'doctors': doctors})
+
+def doctor_profile(request, doctor_id):
+    doctor = get_object_or_404(Doctor, pk=doctor_id)
+    return render(request, 'doctor_profile.html', {'doctor': doctor})
+def create_appointment(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            appointment = form.save(commit=False)
+            
+            # Simulate payment (For now, mock the online payment logic)
+            if appointment.payment_method == 'online':
+                appointment.is_paid = True  # Assume payment is successful for now
+                
+            appointment.save()
+            return redirect('appointment_success')  # Redirect to success page or another view
+    else:
+        form = AppointmentForm()
+    return render(request, 'appointment_form.html', {'form': form})
 

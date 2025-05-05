@@ -1,3 +1,4 @@
+<!-- Add appointment booking template -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,13 +55,25 @@
             {% endfor %}
         </select>
 
-
-        
         <label for="id_date">Appointment Date</label>
         {{ form.date }}
 
         <label for="id_time_slot">Select Time Slot</label>
         {{ form.time_slot }}
+
+
+        <!-- Payment Method Dropdown -->
+      <label for="id_payment_method">Payment Method</label>
+      {{ form.payment_method }}
+
+
+        <!-- New Payment Method Dropdown -->
+      <label for="id_payment_method">Payment Method</label>
+      <select name="payment_method" id="id_payment_method" required>
+        <option value="online">Online</option>
+        <option value="cash">Pay at Clinic</option>
+      </select>
+
 
         {% for field in form %}
             {% if field.errors %}
@@ -77,4 +90,3 @@
     <a href="/" class="home-button">Back to Home</a>
 </body>
 </html>
-
