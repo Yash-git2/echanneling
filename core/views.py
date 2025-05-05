@@ -4,11 +4,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, AppointmentForm
 from .models import Appointment
 from .models import LabTestBooking
-from .models import Doctor
+from .models import Doctor,DoctorAvailability
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from . import views
 from .forms import RescheduleAppointmentForm
+from datetime import datetime
 
 def home(request):
     return render(request, 'home.html')
@@ -32,6 +33,27 @@ def book_appointment(request):
         if form.is_valid():
             appointment = form.save(commit=False)
             appointment.user = request.user
+
+            doctor = appointment.doctor
+
+            # Convert selected time_slot string to a time object
+            try:
+                selected_time = datetime.strptime(appointment.time_slot, "%I:%M %p").time()
+            except ValueError:
+                form.add_error('time_slot', 'Invalid time format.')
+                return render(request, 'appointment_booking.html', {'form': form})
+
+            # Get availability record for that doctor and date
+            try:
+                availability = DoctorAvailability.objects.get(doctor=doctor, date=appointment.date)
+            except DoctorAvailability.DoesNotExist:
+                form.add_error('date', 'Doctor is not available on this date.')
+                return render(request, 'appointment_booking.html', {'form': form})
+
+            # Check if selected_time is within doctor's available range
+            if not (availability.start_time <= selected_time < availability.end_time):
+                form.add_error('time_slot', 'The selected time is outside the doctor\'s available hours.')
+                return render(request, 'appointment_booking.html', {'form': form})
 
             # Check if slot is already booked
             exists = Appointment.objects.filter(
@@ -166,4 +188,3 @@ def create_appointment(request):
     else:
         form = AppointmentForm()
     return render(request, 'appointment_form.html', {'form': form})
-
