@@ -1,0 +1,19 @@
+<h1>Doctors</h1>
+<form method="get">
+    <input type="text" name="specialty" placeholder="Search specialty">
+    <select name="sort">
+        <option value="">Sort By</option>
+        <option value="available">Availability</option>
+    </select>
+    <button type="submit">Filter</button>
+</form>
+
+<ul>
+    {% for doctor in doctors %}
+    <li>
+        <img src="{{ doctor.image.url }}" alt="{{ doctor.name }}" width="100" />
+        <a href="{% url 'doctor_profile' doctor.id %}">{{ doctor.name }}</a> - {{ doctor.specialty }}
+        {% if doctor.availability %} ✅ Available {% else %} ❌ Not Available {% endif %}
+    </li>
+    {% endfor %}
+</ul>
