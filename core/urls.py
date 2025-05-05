@@ -1,4 +1,4 @@
-#Add URL patterns for appointment booking and lab test booking
+
 
 from django.urls import path
 from django.contrib.auth import views as auth_views
