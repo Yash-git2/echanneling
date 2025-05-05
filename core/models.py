@@ -63,7 +63,7 @@ class DoctorAvailability(models.Model):
     end_time = models.TimeField()
 
     def __str__(self):
-        return f"{self.doctor.username} - {self.date} ({self.start_time} to {self.end_time})"
+        return f"{self.doctor.name} - {self.date} ({self.start_time} to {self.end_time})"
     
 
 
