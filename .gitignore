@@ -20,3 +20,5 @@ db.sqlite3
 # OS
 .DS_Store
 Thumbs.db
+
+# Added .gitignore file (Django template) to exclude unnecessary files from version control
