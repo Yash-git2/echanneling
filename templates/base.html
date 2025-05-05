@@ -21,24 +21,18 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="/">CareConnect</a>
             <div>
-                <a class="nav-link d-inline" href="/">Home | </a>
-
                 {% if user.is_authenticated %}
-
                     <form method="post" action="{% url 'logout' %}" style="display: inline;">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-link nav-link d-inline p-0" style="color: #0d6efd; text-decoration: underline;">Logout |</button>
+                        <button type="submit" class="btn btn-primary">Logout</button>
                     </form>
-                    <a class="nav-link d-inline" href="{% url 'dashboard' %}">View Appointments | </a>
-                    <a class="nav-link d-inline" href="{% url 'emergency_numbers' %}">Emergency Numbers</a>
-
                 {% else %}
                     <a class="nav-link d-inline" href="/login/">Login | </a>
                     <a class="nav-link d-inline" href="/register/">Register </a>
                 {% endif %}
-
-
             </div>
+            
+            
         </div>
     </nav>
 
