@@ -53,6 +53,7 @@ class DoctorAvailability(models.Model):
 
 class LabTestBooking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=100)
     test_name = models.CharField(max_length=100)
     doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True)
     date = models.DateField(default=timezone.now)
