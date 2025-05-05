@@ -1,4 +1,5 @@
 from django import forms
+from .models import Appointment
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -36,7 +37,9 @@ class AppointmentForm(forms.ModelForm):
 
     class Meta:
         model = Appointment
-        fields = ['doctor', 'date', 'time_slot']
-        widgets = {
-            'date': forms.DateInput(attrs={'type': 'date'}),
-        }
+        fields = ['doctor', 'date', 'time_slot', 'payment_method']
+
+    payment_method = forms.ChoiceField(
+        choices=Appointment.PAYMENT_METHOD_CHOICES,
+        widget=forms.RadioSelect
+    )
