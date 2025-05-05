@@ -17,7 +17,7 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Account created successfully!')
-            return redirect('dashboard')
+            return redirect('home')
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
