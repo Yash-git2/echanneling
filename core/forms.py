@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import Appointment, Doctor
+
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -10,7 +12,7 @@ class RegisterForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 
-from .models import Appointment, Doctor
+
 
 class AppointmentForm(forms.ModelForm):
     # ✅ Dummy time slots for now
@@ -36,7 +38,15 @@ class AppointmentForm(forms.ModelForm):
 
     class Meta:
         model = Appointment
-        fields = ['doctor', 'date', 'time_slot']
-        widgets = {
-            'date': forms.DateInput(attrs={'type': 'date'}),
-        }
+        fields = ['doctor', 'date', 'time_slot', 'payment_method']  # include other fields as needed
+
+    def __init__(self, *args, **kwargs):
+        super(AppointmentForm, self).__init__(*args, **kwargs)
+
+        # Only show actual doctors in the dropdown
+        self.fields['doctor'].queryset = Doctor.objects.all()
+
+        # Optional: Add placeholders and form styling
+        self.fields['date'].widget.attrs.update({'placeholder': 'YYYY-MM-DD'})
+        self.fields['time_slot'].widget.attrs.update({'placeholder': 'e.g. 10:00 AM'})
+        self.fields['payment_method'].widget.attrs.update({'class': 'form-control'})

@@ -19,7 +19,7 @@ class Appointment(models.Model):
         ('online', 'Online Payment'),
         ('cash', 'Cash at Visit'),
     ]
-
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     date = models.DateField()
@@ -32,11 +32,11 @@ class Appointment(models.Model):
     is_paid = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = ('doctor', 'date', 'time_slot')
+        unique_together = ('doctor', 'date', 'time_slot')  # Prevent double bookings
 
     def __str__(self):
         return f"{self.user.username} - {self.doctor.name} - {self.date} {self.time_slot} - {self.payment_method}"
- 
+
 
 
 
