@@ -47,7 +47,7 @@ class Appointment(models.Model):
 
 
 class DoctorAvailability(models.Model):
-    doctor = models.ForeignKey(User, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
