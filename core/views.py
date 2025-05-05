@@ -117,7 +117,7 @@ def lab__test(request):
             notes=notes
         )
         messages.success(request, "Lab test booked successfully.")
-        return redirect('dashboard')  # Assuming this exists in your urls.py
+        return redirect('dashboard')  
 
     return render(request, 'book_lab_test.html')  # Use a dedicated template for lab test booking
         
@@ -149,3 +149,19 @@ def doctor_list(request):
 def doctor_profile(request, doctor_id):
     doctor = get_object_or_404(Doctor, pk=doctor_id)
     return render(request, 'doctor_profile.html', {'doctor': doctor})
+def create_appointment(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            appointment = form.save(commit=False)
+            
+            # Simulate payment (For now, mock the online payment logic)
+            if appointment.payment_method == 'online':
+                appointment.is_paid = True  # Assume payment is successful for now
+                
+            appointment.save()
+            return redirect('appointment_success')  # Redirect to success page or another view
+    else:
+        form = AppointmentForm()
+    return render(request, 'appointment_form.html', {'form': form})
+
