@@ -1,15 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <h2>Reschedule Appointment</h2>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}  <!-- This renders the form fields -->
-    <button type="submit">Reschedule Appointment</button>
-</form>
+<style>
+    .form-container {
+        margin: 20px 0;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .form-container form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-container form button {
+        background-color: #3498db;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .form-container form button:hover {
+        background-color: #2980b9;
+    }
+
+    .appointment-details ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 20px 0;
+        font-size: 16px;
+    }
+
+    .appointment-details li {
+        padding: 5px 0;
+    }
+
+    .appointment-details li strong {
+        font-weight: bold;
+    }
+</style>
+
+<div class="form-container">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- This renders the form fields -->
+        <button type="submit">Reschedule Appointment</button>
+    </form>
+</div>
 
 <p>Current Appointment Details:</p>
-<ul>
-    <li>Doctor: {{ appointment.doctor.name }}</li>
-    <li>Date: {{ appointment.date }}</li>
-    <li>Time Slot: {{ appointment.time_slot }}</li>
-    <li>Payment Method: {{ appointment.payment_method }}</li>
-</ul>
+
+<div class="appointment-details">
+    <ul>
+        <li><strong>Doctor:</strong> {{ appointment.doctor.name }}</li>
+        <li><strong>Date:</strong> {{ appointment.date }}</li>
+        <li><strong>Time Slot:</strong> {{ appointment.time_slot }}</li>
+        <li><strong>Payment Method:</strong> {{ appointment.payment_method }}</li>
+    </ul>
+</div>
+
+{% endblock %}

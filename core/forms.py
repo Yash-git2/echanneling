@@ -78,7 +78,7 @@ class RescheduleAppointmentForm(forms.ModelForm):
     # Payment method remains as in AppointmentForm (optional for rescheduling)
     payment_method = forms.ChoiceField(
         choices=Appointment.PAYMENT_METHOD_CHOICES,
-        widget=forms.RadioSelect
+        widget=forms.Select
     )
 
     # Date picker for rescheduling

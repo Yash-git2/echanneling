@@ -24,6 +24,7 @@ class Doctor(models.Model):
         return f"{self.name} - {self.specialty}"
 
 class Appointment(models.Model):
+
     PAYMENT_METHOD_CHOICES = [
         ('online', 'Online Payment'),
         ('cash', 'Cash at Visit'),

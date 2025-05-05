@@ -40,13 +40,15 @@
                     <span class="badge bg-danger">Canceled</span>
                 {% endif %}
 
+                <hr>
+
                 <div class="mt-2">
                     {% if appointment.status == 'upcoming' %}
                         <form method="POST" action="{% url 'cancel_appointment' appointment.id %}" style="display:inline;">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Cancel Appointment</button>
                         </form>
-                        <a href="{% url 'reschedule_appointment' appointment.id %}" class="btn btn-warning btn-sm ml-2">Reschedule</a>
+                        <a href="{% url 'reschedule_appointment' appointment.id %}" class="btn btn-warning btn-sm ml-2">Reschedule Appointment</a>
                     {% endif %}
                 </div>
             </li>
@@ -58,7 +60,7 @@
 
 <!-- LAB TEST APPOINTMENTS -->
 <hr class="my-4">
-<h2>My Lab Test Bookings</h2>
+<h2 class="mt-5">My Lab Test Bookings</h2>
 
 {% if lab_tests %}
     <ul class="list-group">
