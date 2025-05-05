@@ -10,7 +10,7 @@ urlpatterns = [
     path('register/', views.register, name='register'), #Handles new user registration
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'), #Handles user login
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'), #Logs out the user
-    path('dashboard/', views.dashboard, name='dashboard'), 
+    path('dashboard/', views.dashboard, name='dashboard'), #Display dashboard
     path('appointment/', views.view_appointments, name='view_appointments'),
     path('book/', views.book_appointment, name='book_appointment'), #Allows users to book doctor appointments
     path('cancel/<int:appointment_id>/', views.cancel_appointment, name='cancel_appointment'), #Allows users to cancel appointments
