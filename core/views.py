@@ -24,19 +24,25 @@ def register(request):
 
 @login_required
 def book_appointment(request):
-    
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
             appointment = form.save(commit=False)
             appointment.user = request.user
-            # Check if slot is available
+
+            # Check if slot is already booked
             exists = Appointment.objects.filter(
                 doctor=appointment.doctor,
                 date=appointment.date,
                 time_slot=appointment.time_slot
             ).exists()
             if not exists:
+                # Handle payment method
+                if appointment.payment_method == 'cash':
+                    appointment.is_paid = False
+                else:
+                    appointment.is_paid = True  # Update after real payment gateway integration
+
                 appointment.save()
                 messages.success(request, "Appointment successfully booked!")
                 return redirect('dashboard')
@@ -45,6 +51,7 @@ def book_appointment(request):
     else:
         form = AppointmentForm()
     return render(request, 'appointment_booking.html', {'form': form})
+
 
 @login_required
 def dashboard(request):
