@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class Doctor(models.Model):
     name = models.CharField(max_length=100)
@@ -34,3 +35,15 @@ class DoctorAvailability(models.Model):
 
     def __str__(self):
         return f"{self.doctor.username} - {self.date} ({self.start_time} to {self.end_time})"
+    
+
+
+class LabTestBooking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    test_name = models.CharField(max_length=100)
+    doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True)
+    date = models.DateField(default=timezone.now)
+    time_slot = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.test_name} on {self.date}"
