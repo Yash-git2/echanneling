@@ -51,15 +51,17 @@
     }
 </style>
 
-<div class="form-container">
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}  <!-- This renders the form fields -->
-        <button type="submit">Reschedule Appointment</button>
-    </form>
+<div class="form-container" style="margin-bottom: 40px;">
+  <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}  <!-- This renders the form fields -->
+      <button type="submit">Reschedule Appointment</button>
+  </form>
 </div>
 
-<p>Current Appointment Details:</p>
+<p style="font-weight: bold; font-size: 1.2rem; text-decoration: underline;">
+  Current Appointment Details:
+</p>
 
 <div class="appointment-details">
     <ul>
