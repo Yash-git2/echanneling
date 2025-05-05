@@ -1,0 +1,51 @@
+<!-- Add email templates for appointment cancellation -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointment Cancellation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #dc3545;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+        }
+        .details {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Appointment Cancellation</h2>
+        <p>Dear {{ user.name }},</p>
+        <p>We regret to inform you that your appointment with Dr. {{ doctor.name }} has been canceled.</p>
+
+        <div class="details">
+            <p><strong>Original Appointment Details:</strong></p>
+            <p><strong>Date:</strong> {{ appointment.date }}</p>
+            <p><strong>Time:</strong> {{ appointment.time }}</p>
+            <p><strong>Doctor:</strong> Dr. {{ doctor.name }} ({{ doctor.specialty }})</p>
+            <p><strong>Hospital:</strong> {{ doctor.hospital }}</p>
+        </div>
+
+        <p>If you would like to reschedule, please visit the channeling app to book a new appointment with Dr. {{ doctor.name }} or another doctor.</p>
+        <p>We apologize for the inconvenience, and thank you for using channeling!</p>
+    </div>
+</body>
+</html>
