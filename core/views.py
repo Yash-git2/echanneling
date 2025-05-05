@@ -6,6 +6,9 @@ from .models import Appointment
 from .models import LabTestBooking
 from .models import Doctor
 from django.contrib import messages
+from django.shortcuts import render, get_object_or_404, redirect
+from . import views
+from .forms import RescheduleAppointmentForm
 
 def home(request):
     return render(request, 'home.html')
@@ -55,12 +58,15 @@ def book_appointment(request):
 
 @login_required
 def dashboard(request):
+    user = request.user
     appointments = Appointment.objects.filter(user=request.user)
     lab_tests = LabTestBooking.objects.filter(user=request.user)
+
     return render(request, 'dashboard.html', {
         'appointments': appointments,
         'lab_tests': lab_tests,
     })
+
 
 @login_required
 def cancel_appointment(request, appointment_id):
@@ -70,23 +76,6 @@ def cancel_appointment(request, appointment_id):
         messages.success(request, "Appointment cancelled successfully.")
         return redirect('dashboard')
 
-
-# Doctor appointments view
-def view_appointments(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        date = request.POST.get('date')
-        time = request.POST.get('time')
-        appointment = Appointment.objects.create(
-            user=request.user,  
-            name=name,
-            date=date,
-            time=time
-        )
-        messages.success(request, f"Appointment for {name} on {date} at {time} has been successfully booked!")
-    appointments = Appointment.objects.filter(user=request.user).order_by('-date')
-
-    return render(request, 'dashboard.html', {'appointments': appointments})
 
 def book_appointment_view(request):
     # Any logic for booking an appointment here (if any)
@@ -122,14 +111,26 @@ def lab__test(request):
     return render(request, 'book_lab_test.html')  # Use a dedicated template for lab test booking
         
 
-# Lab test appointments view
-def view_lab_tests(request):
-    lab_tests = LabTestBooking.objects.filter(user=request.user).order_by('-preferred_date')
-    return render(request, 'dashboard.html', {'lab_tests': lab_tests})
-
 @login_required
 def reschedule_appointment(request, appointment_id):
-    return redirect('book_appointment')
+    # Retrieve the existing appointment by ID (or 404 if it doesn't exist)
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+    
+    if request.method == 'POST':
+        # Bind the form to the existing appointment instance
+        form = RescheduleAppointmentForm(request.POST, instance=appointment)
+        
+        if form.is_valid():
+            # Save the updated appointment details
+            form.save()
+            # After saving, you can redirect the user to a confirmation page or the updated appointment details
+            return redirect('dashboard')
+    else:
+        # Initialize the form with the existing appointment data
+        form = RescheduleAppointmentForm(instance=appointment)
+
+    return render(request, 'reschedule_appointment.html', {'form': form, 'appointment': appointment})
+
 
 
 
@@ -149,6 +150,7 @@ def doctor_list(request):
 def doctor_profile(request, doctor_id):
     doctor = get_object_or_404(Doctor, pk=doctor_id)
     return render(request, 'doctor_profile.html', {'doctor': doctor})
+
 def create_appointment(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
