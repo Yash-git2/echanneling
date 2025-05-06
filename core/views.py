@@ -199,3 +199,4 @@ def cancel_lab_test(request, test_id):
         return redirect('dashboard')
     return redirect('dashboard')
 
+
