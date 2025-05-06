@@ -15,6 +15,7 @@ urlpatterns = [
     path('cancel/<int:appointment_id>/', views.cancel_appointment, name='cancel_appointment'), #Allows users to cancel appointments
     path('emergency-numbers/', views.emergency_numbers, name='emergency_numbers'), #View emergency numbers
     path('lab__test/', views.lab__test, name='lab__test'),
+    path('cancel-lab-test/<int:test_id>/', views.cancel_lab_test, name='cancel_lab_test'),
     path('appointment/reschedule/<int:appointment_id>/', views.reschedule_appointment, name='reschedule_appointment'),
     path('doctors/', views.doctor_list, name='doctor_list'), #View doctor list
     path('doctors/<int:doctor_id>/', views.doctor_profile, name='doctor_profile'), #View doctor profile

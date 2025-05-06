@@ -55,6 +55,7 @@ def book_appointment(request):
                 form.add_error('time_slot', 'The selected time is outside the doctor\'s available hours.')
                 return render(request, 'appointment_booking.html', {'form': form})
 
+
             # Check if slot is already booked
             exists = Appointment.objects.filter(
                 doctor=appointment.doctor,
@@ -188,3 +189,13 @@ def create_appointment(request):
     else:
         form = AppointmentForm()
     return render(request, 'appointment_form.html', {'form': form})
+
+@login_required
+def cancel_lab_test(request, test_id):
+    test = get_object_or_404(LabTestBooking, id=test_id, user=request.user)
+    if request.method == 'POST':
+        test.delete()
+        messages.success(request, "Lab test booking cancelled successfully.")
+        return redirect('dashboard')
+    return redirect('dashboard')
+
