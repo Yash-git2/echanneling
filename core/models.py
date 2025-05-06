@@ -70,6 +70,17 @@ class DoctorAvailability(models.Model):
 class LabTestBooking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100)
+    email = models.EmailField(default='abc@gmail.com')  # Default email value
+
+    test = models.CharField(max_length=50)
+    preferred_date = models.DateField(null=True, blank=True)
+    preferred_time = models.TimeField(default="09:00:00")  # Default time value
+    prescription = models.FileField(upload_to='prescriptions/', null=True, blank=True)
+    notes = models.TextField(blank=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.full_name} - {self.test} on {self.preferred_date}"
 
 class doctor_availability(models.Model):
     test_name = models.CharField(max_length=100)
@@ -79,7 +90,7 @@ class doctor_availability(models.Model):
 
     def __str__(self):
         return f"{self.test_name} on {self.date}"
-class Appointment(models.Model):
+class Lab_Appointment(models.Model):
     email = models.EmailField(default='abc@gmail.com')  # Default email value
 
     test = models.CharField(max_length=50)
