@@ -125,7 +125,7 @@ STATIC_URL = '/static/'
 
 # If you're developing locally and want to serve static files directly
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # only if you store global static files
+    BASE_DIR / "core/static",  # only if you store global static files
 ]
 
 # Default primary key field type

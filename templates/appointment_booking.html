@@ -46,24 +46,24 @@
             </ul>
         {% endif %}
 
-        <label for="id_doctor">Select Doctor</label>
+        <label for="id_doctor">Select Doctor :</label>
         <select name="doctor" id="id_doctor">
             {% for doctor in form.fields.doctor.queryset %}
                 <option value="{{ doctor.id }}">
-                    {{ doctor.name }} ({{ doctor.specialty }}) - {{ doctor.hospital }}
+                    {{ doctor.name }} ({{ doctor.specialty }}) 
                 </option>
             {% endfor %}
         </select>
 
-        <label for="id_date">Appointment Date</label>
+        <label for="id_date">Appointment Date :</label>
         {{ form.date }}
 
-        <label for="id_time_slot">Select Time Slot</label>
+        <label for="id_time_slot">Select Time Slot :</label>
         {{ form.time_slot }}
 
 
         <!-- New Payment Method Dropdown -->
-      <label for="id_payment_method">Payment Method</label>
+      <label for="id_payment_method">Payment Method :</label>
       <select name="payment_method" id="id_payment_method" required>
         <option value="online">Online</option>
         <option value="cash">Pay at Clinic</option>

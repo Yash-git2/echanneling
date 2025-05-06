@@ -4,6 +4,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+class Hospital(models.Model):
+    name = models.CharField(max_length=255)
+    address = models.TextField()
+
+    def __str__(self):
+        return self.name
+    
 class Doctor(models.Model):
     name = models.CharField(max_length=100)
     specialty = models.CharField(max_length=100)
@@ -17,6 +24,7 @@ class Doctor(models.Model):
         return f"{self.name} - {self.specialty}"
 
 class Appointment(models.Model):
+
     PAYMENT_METHOD_CHOICES = [
         ('online', 'Online Payment'),
         ('cash', 'Cash at Visit'),
@@ -55,13 +63,14 @@ class DoctorAvailability(models.Model):
     end_time = models.TimeField()
 
     def __str__(self):
-        return f"{self.doctor.username} - {self.date} ({self.start_time} to {self.end_time})"
+        return f"{self.doctor.name} - {self.date} ({self.start_time} to {self.end_time})"
     
 
 
 class LabTestBooking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100)
+
 class doctor_availability(models.Model):
     test_name = models.CharField(max_length=100)
     doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True)
@@ -69,12 +78,13 @@ class doctor_availability(models.Model):
     time_slot = models.CharField(max_length=50)
 
     def __str__(self):
-        return f"{self.user.username} - {self.test_name} on {self.date}"
+        return f"{self.test_name} on {self.date}"
 class Appointment(models.Model):
-    email = models.EmailField()
+    email = models.EmailField(default='abc@gmail.com')  # Default email value
+
     test = models.CharField(max_length=50)
     preferred_date = models.DateField(null=True, blank=True)
-    preferred_time = models.TimeField()
+    preferred_time = models.TimeField(default="09:00:00")  # Default time value
     prescription = models.FileField(upload_to='prescriptions/', null=True, blank=True)
     notes = models.TextField(blank=True)
     submitted_at = models.DateTimeField(auto_now_add=True)

@@ -1,14 +1,9 @@
-<!-- Add dashboard.html template for user dashboard view -->
-
-
 {% extends 'base.html' %}
 
 {% block content %}
 <h2>My Appointments</h2>
 
 <style>
-
-    /* Styles for the home button */
     .home-button {
         position: fixed;
         bottom: 20px;
@@ -26,13 +21,14 @@
         background-color: #2980b9;
     }
 </style>
-<!-- Existing Doctor Appointments Section -->
-{% if appointment %}
+
+<!-- DOCTOR APPOINTMENTS -->
+{% if appointments %}
     <ul class="list-group">
         {% for appointment in appointments %}
             <li class="list-group-item">
                 <strong>Doctor:</strong> {{ appointment.doctor.name }} <br>
-                <strong>Hospital:</strong> {{ appointment.doctor.hospital }}<br>
+<!--            <strong>Hospital:</strong> {{ appointment.doctor.hospital }}<br> -->
                 <strong>Date:</strong> {{ appointment.date }} <br>
                 <strong>Time:</strong> {{ appointment.time_slot }} <br>
 
@@ -44,13 +40,15 @@
                     <span class="badge bg-danger">Canceled</span>
                 {% endif %}
 
+                <hr>
+
                 <div class="mt-2">
                     {% if appointment.status == 'upcoming' %}
                         <form method="POST" action="{% url 'cancel_appointment' appointment.id %}" style="display:inline;">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Cancel Appointment</button>
                         </form>
-                        <a href="{% url 'book_appointment' %}" class="btn btn-warning btn-sm ml-2">Reschedule</a>
+                        <a href="{% url 'reschedule_appointment' appointment.id %}" class="btn btn-warning btn-sm ml-2">Reschedule Appointment</a>
                     {% endif %}
                 </div>
             </li>
@@ -60,11 +58,11 @@
     <p>No doctor appointments found.</p>
 {% endif %}
 
-<!-- LAB TEST APPOINTMENTS SECTION -->
+<!-- LAB TEST APPOINTMENTS -->
 <hr class="my-4">
-<h2>My Lab Test Bookings</h2>
+<h2 class="mt-5">My Lab Test Bookings</h2>
 
-{% if lab__test %}
+{% if lab_tests %}
     <ul class="list-group">
         {% for test in lab_tests %}
             <li class="list-group-item">
@@ -79,6 +77,10 @@
                     {% else %}
                         <span class="badge bg-secondary">No Prescription</span>
                     {% endif %}
+                    <form method="POST" action="{% url 'cancel_lab_test' test.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm mt-2">Cancel Lab Test</button>
+                    </form>
                 </div>
             </li>
         {% endfor %}
@@ -87,8 +89,7 @@
     <p>No lab test appointments found.</p>
 {% endif %}
 
-
-<!-- Pagination (Optional) -->
+<!-- Pagination Controls -->
 <div class="pagination mt-4">
   {% for page_num in page_range %}
     <a href="?page={{ page_num }}" class="btn btn-light">{{ page_num }}</a>
@@ -96,5 +97,4 @@
 </div>
 
 <a href="/" class="home-button">Back to Home</a>
-
 {% endblock %}
