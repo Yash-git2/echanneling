@@ -164,4 +164,3 @@ def create_appointment(request):
     else:
         form = AppointmentForm()
     return render(request, 'appointment_form.html', {'form': form})
-
