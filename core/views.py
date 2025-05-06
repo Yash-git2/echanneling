@@ -55,7 +55,6 @@ def book_appointment(request):
                 form.add_error('time_slot', 'The selected time is outside the doctor\'s available hours.')
                 return render(request, 'appointment_booking.html', {'form': form})
 
-
             # Check if slot is already booked
             exists = Appointment.objects.filter(
                 doctor=appointment.doctor,
@@ -189,4 +188,3 @@ def create_appointment(request):
     else:
         form = AppointmentForm()
     return render(request, 'appointment_form.html', {'form': form})
-
